@@ -1,18 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Directory browser</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block bodycontent %}
+<div class="container-center">
     <ul>
+        <li>
+            <a style="color:black; font-size:30px" href={{ parent }}>←</a>
+        </li>
         {%  for i in range(length) %}
-            <li>
-                <a href="{{ filenames[i] }}">
+            <li {% if i%2 == 0 %} style="background-color: rgba(0,0,0,0.15)" {% endif %}>
+            <div class="row align-items-center">
+                <div class="col-md-auto">
+                <form method="post" action={{ filenames[i] + "/delete"}}>
+                    <input class="del-input" type="submit" value="×">
+                </form>
+                </div>
+                <div class="col-6">
+                <a style="color:black" href="{{ filenames[i] }}">
                     {{ files[i] }}
                 </a>
+                </div>
+                <div class="col-md-auto">
+                <form method="post" action={{ filenames[i] + "/rename" }}>
+                    <input type="text" name="new_filename"><input style="float:right; font-size:16px" type="submit" value="Rename">
+                </form>
+                </div>
+            </div>
             </li>
         {% endfor %}
+    <li>
+    <div class="row">
+        <div class="col-md-5">
+            Create new folder:
+        </div>
+        <div class="col-md-auto">
+            Upload file:
+        </div>
+    </div>
+    </li>
+    <li>
+    <div class="row">
+        <div class="col-md-5">
+            <form method="post" action={{ url + "add_folder" }}>
+                <input type="text" name="new_folder">
+                <input type="submit" value="Create">
+            </form>
+        </div>
+        <div class="col-md-auto">
+            <form method="post" enctype="multipart/form-data" action="">
+                <input type="file" name="file">
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+    </div>
+    </li>
     </ul>
-</body>
-</html>
+</div>
+{% endblock %}

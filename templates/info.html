@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block bodycontent %}
+    <h1>Статистика:</h1>
+    <ul>
+    {% for stats in info %}
+        <li>
+            <h2>{{ stats.extension }}</h2>
+            <h3 style="margin-left: 10%">Uploads : {{ stats.uploads }}</h3>
+            <h3 style="margin-left: 10%">Downloads : {{ stats.downloads }}</h3>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
